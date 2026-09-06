@@ -1,92 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Справочник посёлков</title>
-    <!-- Пинаем кэш стилей, чтобы намертво сбросить карусель -->
-    <link rel="stylesheet" href="style.css?v=9999">
-</head>
-<body>
-
-    <header>
-        <div class="top-row">
-            <button class="circle-btn" id="themeToggle" onclick="toggleTheme()">🌙</button>
-            <div class="title-site" id="siteTitle">Справочник</div>
-            <div class="lang-panel">
-                <span class="lang-btn active" id="btn-ru" onclick="setLang('ru')">RU</span>
-                <span class="lang-btn" id="id-kz" onclick="setLang('kz')">KZ</span>
-            </div>
-        </div>
-
-        <div id="villageSelectorContainer"></div>
-
-        <div class="search-row">
-            <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Поиск...">
-            <button class="btn-reset" id="btnReset" onclick="resetSearch()">Сбросить</button>
-        </div>
-
-        <div style="display:flex; gap:8px; margin-bottom:12px;">
-            <button class="btn-action-main" id="btnFavAction" style="margin:0; flex:1; background:#ffb300; box-shadow:0 4px #ff8f00;" onclick="toggleFavoritesView()">⭐ Избранное</button>
-            <button class="btn-action-main" id="btnMainAction" style="margin:0; flex:1;" onclick="openModal('addModal')">➕ Добавить</button>
-        </div>
-
-        <div class="categories-control-row">
-            <button class="view-toggle-btn" id="btnViewToggle" onclick="toggleCategoriesView()">👁️ Вкладки</button>
-            <div id="alphabetContainer" class="tabs"></div>
-            <select class="categories-select" id="categoriesMainSelect" onchange="handleSelectCategoryChange()" style="display:none;"></select>
-        </div>
-    </header>
-
-    <div id="searchTitleContainer" style="display:none; padding:10px 12px 2px 12px; font-weight:700; color:#4a5568; font-size:14px;">Результаты поиска</div>
-    <div id="labsContainer" style="display:none; padding:10px 12px 2px 12px; gap:5px; flex-wrap:wrap; justify-content:center;"></div>
-    <main id="content"></main>
-
-    <button id="toTop" onclick="scrollToTop()">▲</button>
-
-    <div class="modal" id="addModal" onclick="closeModal('addModal', event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h3 id="modalTitle" style="margin-bottom:8px;">Новая анкетная форма</h3>
-
-            <div class="form-group">
-                <select id="formVillageSelect" style="border: 2px solid #0b66ff; font-weight:700; color:#0b66ff;"></select>
-            </div>
-
-            <div class="form-group">
-                <select id="formCatSelect" onchange="toggleCustomCategoryField()"></select>
-            </div>
-
-            <div class="form-group" id="customCatWrapper" style="display:none;">
-                <input type="text" id="formCustomCat" placeholder="Впишите новую категорию руками">
-            </div>
-
-            <div class="form-group"><input type="text" id="formName" placeholder="Название объекта или тип мастера" required></div>
-
-            <div class="form-group"><input type="text" id="formPhone" placeholder="Телефон" required></div>
-
-            <div style="display:flex; align-items:center; gap:8px; margin:4px 0; font-size:14px; font-weight:500;">
-                <input type="checkbox" id="formHasWA" checked style="width:18px; height:18px; cursor:pointer;">
-                <label for="formHasWA" id="lblHasWA" style="cursor:pointer;">На этом номере есть WhatsApp</label>
-            </div>
-
-            <div class="form-group"><input type="text" id="formFio" placeholder="Имя Фамилия Отчество"></div>
-            <div class="form-group"><textarea id="formDesc" rows="3" placeholder="Описание услуги или товара"></textarea></div>
-            <div class="form-group"><input type="text" id="formLoc" placeholder="Ориентир / Адрес"></div>
-
-            <div style="display:flex; gap:8px; margin-top:5px;">
-                <button class="btn-ui" style="background:#6c757d;" id="btnCancelForm" onclick="closeModal('addModal', event)">Отмена</button>
-                <button class="btn-ui btn-ui-call" style="flex:2; margin:0;" id="btnSubmitForm" onclick="sendNewContact()">Отправить в WhatsApp</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- АВТОМАТИЧЕСКАЯ И БЕСПЕРЕБОЙНАЯ ЧИСТКА КЭША ПО СЕКУНДАМ -->
-    <script>
-        document.write('<script src="script.js?v=' + Date.now() + '"><\\/script>');
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", initApp);
-    </script>
-</body>
-</html>
-
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#b59a62"><meta name="description" content="Справочник округов — офлайн PWA">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.png">
+<title>Народный Справочник Приуралья</title>
+<style>
+:root{--bg:#f5f0e6;--card:#fffaf0;--ink:#1d2430;--muted:#687080;--accent:#246bdb;--green:#16a05d;--warn:#f3b51b;--line:#ddd5c6;--night:#071426;--nightcard:#10243b}*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink)}body{transition:background 1.5s ease,color 1.5s ease}.app{min-height:100vh;padding-bottom:82px}.header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:12px 14px}.top{display:flex;align-items:center;justify-content:space-between;gap:8px}.brand{font-weight:900;font-size:21px}.sub{font-size:12px;color:var(--muted)}.actions{display:flex;gap:7px}.round{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;background:var(--card);font-weight:800}.langs{display:flex;gap:4px}.lang{width:38px;height:32px;border-radius:16px;border:1px solid var(--line);background:var(--card);font-weight:800}.lang.active{background:var(--accent);color:white}.search{margin-top:10px;display:flex;gap:8px}.search input{flex:1;padding:13px 15px;border-radius:16px;border:1px solid var(--line);font-size:16px;background:var(--card)}button{cursor:pointer}.primary{background:var(--accent);color:#fff;border:0;border-radius:14px;padding:12px 15px;font-weight:800}.category-strip{display:flex;gap:7px;overflow:auto;padding:10px 0;scrollbar-width:none}.chip{white-space:nowrap;border:1px solid var(--line);background:var(--card);border-radius:20px;padding:9px 12px}.chip.active{background:var(--ink);color:white}.home{padding:10px 14px}.book{position:relative;overflow:hidden}.pages{display:flex;transition:transform .45s ease}.page{min-width:100%;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:4px}.tile{min-height:105px;border:1px solid var(--line);border-radius:20px;background:var(--card);padding:15px;text-align:left;font-weight:900;font-size:16px;box-shadow:0 4px 15px #00000008}.tile small{display:block;margin-top:8px;color:var(--muted);font-weight:500}.filler{opacity:.65}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 4px}.quick button{border:1px solid var(--line);border-radius:15px;background:var(--card);padding:12px 5px;font-weight:800}.cards{padding:0 14px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:12px 0}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:15px;margin-bottom:10px;box-shadow:0 7px 20px #0000000a}.card h3{margin:0 0 6px;font-size:18px}.meta{color:var(--muted);font-size:13px;margin:4px 0}.desc{margin:8px 0;color:var(--ink)}.phone-row{display:flex;align-items:center;gap:7px;margin-top:8px}.phone-label{flex:1;font-weight:800;word-break:break-word}.card-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:10px}.card-actions button,.card-actions a{display:flex;justify-content:center;align-items:center;text-decoration:none;border:0;border-radius:12px;padding:11px 7px;font-weight:800}.call{background:var(--accent);color:white}.wa{background:var(--green);color:white}.secondary{background:#e8e4dc;color:var(--ink)}.error{background:#fff0c7;color:#7a5500}.fav{background:#fff0a8}.bottom{position:fixed;bottom:0;left:0;right:0;z-index:30;display:grid;grid-template-columns:repeat(5,1fr);padding:8px max(8px,env(safe-area-inset-left)) max(8px,env(safe-area-inset-bottom));background:color-mix(in srgb,var(--bg) 95%,transparent);backdrop-filter:blur(16px);border-top:1px solid var(--line)}.bottom button{border:0;background:transparent;padding:8px 2px;font-size:11px;font-weight:800;color:var(--muted)}.bottom button.active{color:var(--accent)}.modal-backdrop,.tour-layer{position:fixed;inset:0;background:#0008;z-index:100;display:flex;align-items:center;justify-content:center;padding:18px}.modal{max-height:90vh;overflow:auto;width:min(560px,100%);background:var(--card);color:var(--ink);border-radius:24px;padding:20px;box-shadow:0 20px 80px #0008}.modal h2{margin-top:0}.form{display:grid;gap:10px}.form input,.form select,.form textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:inherit;color:inherit;font-size:16px}.hint{font-size:12px;color:var(--muted)}.toast{position:fixed;left:50%;bottom:95px;transform:translateX(-50%);background:#202631;color:white;padding:12px 16px;border-radius:14px;z-index:150;opacity:0;pointer-events:none;transition:opacity .2s}.toast.show{opacity:1}.tour-highlight{position:relative;z-index:101;box-shadow:0 0 0 5px #ffd33d,0 0 35px #ffd33d;animation:pulse 1s infinite alternate}.bubble{position:fixed;z-index:102;width:min(420px,calc(100% - 30px));background:white;color:#18202b;border-radius:20px;padding:18px;box-shadow:0 20px 70px #0008}.bubble p{margin-top:0;line-height:1.45}.bubble-actions{display:flex;gap:8px;justify-content:flex-end}.tour-next{background:#246bdb;color:white;border:0;border-radius:12px;padding:11px 15px;font-weight:800}.tour-skip{background:#eee;border:0;border-radius:12px;padding:11px 15px}.splash{position:fixed;inset:0;background:#b59a62;z-index:300;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease}.splash img{width:min(70vw,360px);height:auto}.hidden{display:none!important}@keyframes pulse{to{transform:scale(1.015)}}body.dark{--bg:var(--night);--card:var(--nightcard);--ink:#eef4ff;--muted:#a9b8cd;--line:#25405e}body.dark .secondary{background:#1b314c;color:#eef4ff}body.dark .bottom{background:#071426f2}
+</style></head>
+<body><div id="splash" class="splash"><img src="icon.png" alt=""></div><div class="app" id="app">
+<header class="header"><div class="top"><div><div class="brand" id="brand" data-i18n="brand"></div><div class="sub" id="villageLabel"></div></div><div class="actions"><button class="round" id="themeBtn">🌙</button><button class="round" id="infoBtn">i</button><div class="langs"><button class="lang active" data-lang="ru">RU</button><button class="lang" data-lang="kz">KZ</button></div></div></div><div class="search" id="searchBar"></div><div id="categoryStrip" class="category-strip"></div></header>
+<main><section id="homeView" class="home"><div class="book"><div id="pages" class="pages"></div></div><div id="quick" class="quick"></div></section><section id="cardsView" class="cards"><div class="section-title"><h2 id="viewTitle">Все контакты</h2><button id="allBtn" class="secondary">Все</button></div><div id="cards"></div></section></main>
+<nav class="bottom" id="bottomNav"></nav></div><div id="modalRoot"></div><div id="toast" class="toast"></div>
+<script src="script.js"></script></body></html>

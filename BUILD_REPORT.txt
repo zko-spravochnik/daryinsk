@@ -1,0 +1,33 @@
+SPRAVOCHNIK v2.3 BUILD REPORT
+
+Base:
+- Supplied Version 2.1 index.html/script.js/style.css used as source.
+- Existing style.css preserved; Version 2.3 CSS is append-only at EOF.
+- 12-graph authoritative Darinskoye database copied to official baza_darinsk.txt.
+
+Architecture:
+- Data -> validation/normalization -> semantic mapping -> UI.
+- Five village databases bundled for offline use.
+- languages.json is the only runtime text dictionary; script.js contains no RU/KZ language packs.
+- No NO_WA handling.
+- VIP isolated in reklama.txt.
+- Requests isolated in requests.txt.
+- GitHub commits use Contents API with the locally entered fine-grained PAT.
+- PAT is stored only in localStorage and never written into source files.
+- Offline requests are queued in localStorage and flushed on browser online event.
+- Offline reklama changes produce a downloadable reklama.txt fallback.
+- GitHub rollback remains available through repository commit history.
+
+Important operational limitation:
+- A GitHub Pages static site cannot keep a GitHub secret safely in public JavaScript.
+- The requested PAT is therefore entered manually in the hidden admin screen and stored locally in that browser. This is not public source code, but localStorage is still a client-side secret store; do not use a PAT with broader permissions than Contents: write for this repository.
+- GitHub Pages cannot silently enumerate arbitrary phone folders; the package therefore bundles the five declared village filenames.
+
+Database validation:
+- Village DBs use exactly 12 graphs / 11 separators.
+- Graph 12 is always '.' in bundled village files.
+- Graph 1 is numeric ID.
+- Corrupt rows are isolated instead of crashing the renderer.
+
+Node syntax check: FAIL
+DB checks: {'baza_baikonys.txt': (5, []), 'baza_darinsk.txt': (395, []), 'baza_ozernoe.txt': (5, []), 'baza_rubezhinskoe.txt': (5, []), 'baza_volodarskoe.txt': (5, [])}
